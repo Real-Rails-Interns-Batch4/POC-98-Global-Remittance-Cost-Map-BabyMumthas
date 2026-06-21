@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Corridor, Provider } from "@/types";
+import { Corridor } from "@/types";
 import { Clock, Zap, Timer, Calendar, AlertTriangle } from "lucide-react";
 
 interface SpeedLadderProps {

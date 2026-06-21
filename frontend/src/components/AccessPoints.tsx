@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Corridor, Provider } from "@/types";
+import { Corridor } from "@/types";
 import { ShieldCheck, Landmark, Wallet, DollarSign, Globe, Layers, Users } from "lucide-react";
 
 interface AccessPointsProps {

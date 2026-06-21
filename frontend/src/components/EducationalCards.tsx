@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { HelpCircle, Landmark, Shield, ShieldAlert, BookOpen, Key, DollarSign, Scale, Globe, CheckCircle } from "lucide-react";
+import { Landmark, Shield, ShieldAlert, BookOpen, Key, DollarSign, Scale, Globe, CheckCircle } from "lucide-react";
 
 export default function EducationalCards() {
   const [activeTab, setActiveTab] = useState<"formal-informal" | "rail-control" | "why-matters">("formal-informal");

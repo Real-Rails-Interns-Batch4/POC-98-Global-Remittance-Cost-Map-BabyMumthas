@@ -28,6 +28,15 @@ adapter = SyntheticRemittanceAdapter()
 CORRIDOR_DATA = adapter.fetch_corridors()
 SUMMARY_DATA = adapter.calculate_summary(CORRIDOR_DATA)
 
+@app.get("/")
+def root():
+    return {
+        "service": "Global Remittance Cost Map API",
+        "status": "running",
+        "docs": "/docs",
+        "endpoints": ["/api/health", "/api/corridors", "/api/summary", "/api/download/csv", "/api/download/json"]
+    }
+
 @app.get("/api/health")
 def health_check():
     return {"status": "healthy", "service": "Global Remittance Cost Map Ingestion Service"}

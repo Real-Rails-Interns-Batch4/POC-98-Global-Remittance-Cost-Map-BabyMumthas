@@ -5,6 +5,52 @@ import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend } fro
 import { Corridor, Provider } from "@/types";
 import { Info, HelpCircle } from "lucide-react";
 
+interface TooltipPayloadItem {
+  payload: {
+    name: string;
+    "Percentage Fee ($)": number;
+    "Fixed Fee ($)": number;
+    "FX Spread Markup ($)": number;
+    "Total Cost ($)": number;
+    effectivePercent: string;
+  };
+}
+
+interface CustomTooltipProps {
+  active?: boolean;
+  payload?: TooltipPayloadItem[];
+}
+
+const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
+  if (active && payload && payload.length) {
+    const data = payload[0].payload;
+    return (
+      <div className="bg-slate-900 border border-slate-800 p-3 rounded-lg shadow-xl text-slate-200">
+        <div className="text-xs font-bold text-slate-100 mb-1.5">{data.name}</div>
+        <div className="space-y-1 text-[11px]">
+          <div className="flex justify-between gap-4 text-emerald-400">
+            <span>Percentage Fee:</span>
+            <span>${data["Percentage Fee ($)"].toFixed(2)}</span>
+          </div>
+          <div className="flex justify-between gap-4 text-blue-400">
+            <span>Fixed Fee:</span>
+            <span>${data["Fixed Fee ($)"].toFixed(2)}</span>
+          </div>
+          <div className="flex justify-between gap-4 text-amber-400">
+            <span>FX Spread Markup:</span>
+            <span>${data["FX Spread Markup ($)"].toFixed(2)}</span>
+          </div>
+          <div className="flex justify-between gap-4 border-t border-slate-800 pt-1.5 mt-1 text-slate-100 font-semibold">
+            <span>Total Cost:</span>
+            <span>${data["Total Cost ($)"].toFixed(2)} ({data.effectivePercent}%)</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  return null;
+};
+
 interface FeeCompareProps {
   selectedCorridor: Corridor | null;
   allCorridors: Corridor[];
@@ -80,35 +126,7 @@ export default function FeeCompare({ selectedCorridor, allCorridors }: FeeCompar
   // Sort data so the cheapest provider is at the top
   const sortedChartData = [...chartData].sort((a, b) => a["Total Cost ($)"] - b["Total Cost ($)"]);
 
-  const CustomTooltip = ({ active, payload }: any) => {
-    if (active && payload && payload.length) {
-      const data = payload[0].payload;
-      return (
-        <div className="bg-slate-900 border border-slate-800 p-3 rounded-lg shadow-xl text-slate-200">
-          <div className="text-xs font-bold text-slate-100 mb-1.5">{data.name}</div>
-          <div className="space-y-1 text-[11px]">
-            <div className="flex justify-between gap-4 text-emerald-400">
-              <span>Percentage Fee:</span>
-              <span>${data["Percentage Fee ($)"].toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between gap-4 text-blue-400">
-              <span>Fixed Fee:</span>
-              <span>${data["Fixed Fee ($)"].toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between gap-4 text-amber-400">
-              <span>FX Spread Markup:</span>
-              <span>${data["FX Spread Markup ($)"].toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between gap-4 border-t border-slate-800 pt-1.5 mt-1 text-slate-100 font-semibold">
-              <span>Total Cost:</span>
-              <span>${data["Total Cost ($)"].toFixed(2)} ({data.effectivePercent}%)</span>
-            </div>
-          </div>
-        </div>
-      );
-    }
-    return null;
-  };
+
 
   return (
     <div className="bg-slate-950/65 border border-slate-800/80 p-5 rounded-2xl flex flex-col h-full shadow-xl">
@@ -130,10 +148,10 @@ export default function FeeCompare({ selectedCorridor, allCorridors }: FeeCompar
       </div>
 
       <div className="flex-1 min-h-[300px] text-[11px]">
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height="100%" minHeight={300}>
           <BarChart
             data={sortedChartData}
-            layout="y"
+            layout="vertical"
             margin={{ top: 10, right: 10, left: 10, bottom: 10 }}
           >
             <XAxis type="number" stroke="#94a3b8" fontSize={10} tickFormatter={(val) => `$${val}`} />

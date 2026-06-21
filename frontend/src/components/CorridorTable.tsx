@@ -12,7 +12,7 @@ import {
   SortingState,
 } from "@tanstack/react-table";
 import { Corridor } from "@/types";
-import { Search, ChevronDown, ChevronUp, ArrowRight, Download, Eye, ExternalLink } from "lucide-react";
+import { Search, ChevronDown, ChevronUp, ArrowRight, Download, Eye } from "lucide-react";
 import { CSV_DOWNLOAD_URL } from "@/lib/api";
 
 interface CorridorTableProps {

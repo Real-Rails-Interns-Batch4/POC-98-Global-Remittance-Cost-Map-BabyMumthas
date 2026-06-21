@@ -11,7 +11,7 @@ import AccessPoints from "@/components/AccessPoints";
 import CorridorTable from "@/components/CorridorTable";
 import EducationalCards from "@/components/EducationalCards";
 import DownloadCenter from "@/components/DownloadCenter";
-import { Loader2, ServerCrash, RefreshCw, Layers, ShieldCheck, MapPin } from "lucide-react";
+import { Loader2, ServerCrash, RefreshCw, Layers } from "lucide-react";
 
 export default function Home() {
   const [corridors, setCorridors] = useState<Corridor[]>([]);
@@ -20,34 +20,46 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);
-
-  const loadData = async () => {
-    try {
-      setError(null);
-      const [corridorsData, summaryData] = await Promise.all([
-        fetchCorridors(),
-        fetchSummary(),
-      ]);
-      setCorridors(corridorsData);
-      setSummary(summaryData);
-    } catch (err: any) {
-      console.error("Dashboard data load failure:", err);
-      setError(
-        "Could not establish connection to the FastAPI intelligence service on http://localhost:8000. Please ensure the backend server is running."
-      );
-    } finally {
-      setLoading(false);
-      setRefreshing(false);
-    }
-  };
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   useEffect(() => {
+    let active = true;
+    const loadData = async () => {
+      try {
+        const [corridorsData, summaryData] = await Promise.all([
+          fetchCorridors(),
+          fetchSummary(),
+        ]);
+        if (active) {
+          setCorridors(corridorsData);
+          setSummary(summaryData);
+          setError(null);
+        }
+      } catch (err: unknown) {
+        if (active) {
+          console.error("Dashboard data load failure:", err);
+          setError(
+            "Could not establish connection to the FastAPI intelligence service on http://localhost:8000. Please ensure the backend server is running."
+          );
+        }
+      } finally {
+        if (active) {
+          setLoading(false);
+          setRefreshing(false);
+        }
+      }
+    };
+
     loadData();
-  }, []);
+    return () => {
+      active = false;
+    };
+  }, [refreshTrigger]);
 
   const handleRefresh = () => {
     setRefreshing(true);
-    loadData();
+    setError(null);
+    setRefreshTrigger((prev) => prev + 1);
   };
 
   if (loading) {
