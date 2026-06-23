@@ -1,57 +1,18 @@
 import random
+import json
+import os
 from typing import List, Dict, Any
 from app.models import Corridor, Provider
 from app.adapters.base import BaseRemittanceAdapter
 
-# Static coordinate database for consistent mapping
-COUNTRY_GEOLOCATIONS = {
-    "IN": {"name": "India", "lat": 20.5937, "lng": 78.9629},
-    "AE": {"name": "UAE", "lat": 23.4241, "lng": 53.8478},
-    "US": {"name": "USA", "lat": 37.0902, "lng": -95.7129},
-    "MX": {"name": "Mexico", "lat": 23.6345, "lng": -102.5528},
-    "GB": {"name": "UK", "lat": 55.3781, "lng": -3.4360},
-    "PK": {"name": "Pakistan", "lat": 30.3753, "lng": 69.3451},
-    "DE": {"name": "Germany", "lat": 51.1657, "lng": 10.4515},
-    "TR": {"name": "Turkey", "lat": 38.9637, "lng": 35.2433},
-    "BD": {"name": "Bangladesh", "lat": 23.6850, "lng": 90.3563},
-    "CA": {"name": "Canada", "lat": 56.1304, "lng": -106.3468},
-    "PH": {"name": "Philippines", "lat": 12.8797, "lng": 121.7740},
-    "AU": {"name": "Australia", "lat": -25.2744, "lng": 133.7751},
-    "FR": {"name": "France", "lat": 46.2276, "lng": 2.2137},
-    "MA": {"name": "Morocco", "lat": 31.7917, "lng": -7.0926},
-    "NG": {"name": "Nigeria", "lat": 9.0820, "lng": 8.6753},
-    "PL": {"name": "Poland", "lat": 51.9194, "lng": 19.1451},
-    "ES": {"name": "Spain", "lat": 40.4637, "lng": -3.7492},
-    "CO": {"name": "Colombia", "lat": 4.5709, "lng": -74.2973},
-    "SG": {"name": "Singapore", "lat": 1.3521, "lng": 103.8198},
-    "MY": {"name": "Malaysia", "lat": 4.2105, "lng": 101.9758},
-    "VN": {"name": "Vietnam", "lat": 14.0583, "lng": 108.2772},
-    "SA": {"name": "Saudi Arabia", "lat": 23.8859, "lng": 45.0792},
-    "EG": {"name": "Egypt", "lat": 26.8206, "lng": 30.8025},
-    "ZA": {"name": "South Africa", "lat": -30.5595, "lng": 22.9375},
-    "ZW": {"name": "Zimbabwe", "lat": -19.0154, "lng": 29.1549},
-    "IT": {"name": "Italy", "lat": 41.8719, "lng": 12.5674},
-    "RO": {"name": "Romania", "lat": 45.9432, "lng": 24.9668},
-    "CN": {"name": "China", "lat": 35.8617, "lng": 104.1954},
-    "ID": {"name": "Indonesia", "lat": -0.7893, "lng": 113.9213},
-    "SN": {"name": "Senegal", "lat": 14.4974, "lng": -14.4524},
-    "SV": {"name": "El Salvador", "lat": 13.7942, "lng": -88.8965},
-    "UA": {"name": "Ukraine", "lat": 48.3794, "lng": 31.1656},
-    "DO": {"name": "Dominican Republic", "lat": 18.7357, "lng": -70.1627},
-    "JP": {"name": "Japan", "lat": 36.2048, "lng": 138.2529},
-    "BR": {"name": "Brazil", "lat": -14.2350, "lng": -51.9253}
-}
+# Load static coordinate database from JSON file
+_DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data")
 
-# Explicit corridor list (at least 30 corridors)
-CORRIDOR_DEFS = [
-    ("IN", "AE"), ("IN", "US"), ("US", "MX"), ("GB", "IN"), ("SA", "PK"),
-    ("DE", "TR"), ("AE", "BD"), ("CA", "PH"), ("AU", "IN"), ("FR", "MA"),
-    ("US", "IN"), ("AE", "IN"), ("GB", "NG"), ("US", "PH"), ("DE", "PL"),
-    ("ES", "CO"), ("GB", "PK"), ("SG", "MY"), ("US", "VN"), ("SA", "EG"),
-    ("AE", "PK"), ("ZA", "ZW"), ("IT", "RO"), ("US", "CN"), ("CA", "IN"),
-    ("MY", "ID"), ("AU", "VN"), ("SA", "IN"), ("FR", "SN"), ("AE", "EG"),
-    ("GB", "BD"), ("US", "SV"), ("DE", "UA"), ("US", "DO"), ("JP", "BR")
-]
+with open(os.path.join(_DATA_DIR, "country_geolocations.json"), "r", encoding="utf-8") as f:
+    COUNTRY_GEOLOCATIONS: Dict[str, Dict[str, Any]] = json.load(f)
+
+with open(os.path.join(_DATA_DIR, "corridor_definitions.json"), "r", encoding="utf-8") as f:
+    CORRIDOR_DEFS: List[List[str]] = json.load(f)
 
 class SyntheticRemittanceAdapter(BaseRemittanceAdapter):
     def fetch_corridors(self) -> List[Corridor]:

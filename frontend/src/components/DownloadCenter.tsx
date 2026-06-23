@@ -3,6 +3,7 @@
 import React from "react";
 import { Download, CheckCircle2, ShieldCheck, Database, RefreshCw, FileJson, FileSpreadsheet } from "lucide-react";
 import { CSV_DOWNLOAD_URL, JSON_DOWNLOAD_URL } from "@/lib/api";
+import sourceQualityData from "@/data/source-quality.json";
 
 export default function DownloadCenter() {
   return (
@@ -81,33 +82,29 @@ export default function DownloadCenter() {
         </div>
 
         <div className="bg-slate-900/30 p-3.5 rounded-xl border border-slate-800/60 text-[10.5px] space-y-2 font-medium">
-          <div className="flex justify-between border-b border-slate-850/60 pb-1.5">
-            <span className="text-slate-400">Primary Reference Sources:</span>
-            <span className="text-slate-200 text-right">World Bank RPW / ECB Data Portal</span>
-          </div>
-          <div className="flex justify-between border-b border-slate-850/60 pb-1.5">
-            <span className="text-slate-400">Data Coverage:</span>
-            <span className="text-slate-200 text-right">35 global corridors, 25 distinct countries</span>
-          </div>
-          <div className="flex justify-between border-b border-slate-850/60 pb-1.5">
-            <span className="text-slate-400">Refresh Cycle & Date:</span>
-            <span className="text-slate-200 flex items-center gap-1 text-right">
-              <RefreshCw className="w-3 h-3 text-slate-400 animate-spin-slow" />
-              2026-06-21 (Static Reference)
-            </span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-slate-400">Dataset Status:</span>
-            <span className="text-emerald-400 flex items-center gap-1 font-semibold uppercase text-[10px] font-mono">
-              <CheckCircle2 className="w-3 h-3 text-emerald-400" />
-              Synthetic Label
-            </span>
-          </div>
+          {sourceQualityData.rows.map((row, idx) => (
+            <div key={idx} className={`flex justify-between ${idx < sourceQualityData.rows.length - 1 ? "border-b border-slate-850/60 pb-1.5" : ""}`}>
+              <span className="text-slate-400">{row.label}</span>
+              {row.isStatus ? (
+                <span className="text-emerald-400 flex items-center gap-1 font-semibold uppercase text-[10px] font-mono">
+                  <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                  {row.value}
+                </span>
+              ) : row.hasRefreshIcon ? (
+                <span className="text-slate-200 flex items-center gap-1 text-right">
+                  <RefreshCw className="w-3 h-3 text-slate-400 animate-spin-slow" />
+                  {row.value}
+                </span>
+              ) : (
+                <span className="text-slate-200 text-right">{row.value}</span>
+              )}
+            </div>
+          ))}
         </div>
 
         {/* Transparency note */}
         <div className="text-[9.5px] text-slate-500 bg-slate-900/20 p-2.5 rounded-lg border border-slate-850 leading-relaxed font-medium">
-          <strong>Transparency Notice:</strong> All data displayed on this portal is high-fidelity synthetic reference data modeled on real average costs. Ingestion adapters for real-time World Bank API inputs are stubbed in `/backend/app/adapters`. Do not use this data for live remittance executions.
+          <strong>Transparency Notice:</strong> {sourceQualityData.transparencyNotice}
         </div>
       </div>
     </div>

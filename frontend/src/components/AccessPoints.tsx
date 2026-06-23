@@ -3,6 +3,16 @@
 import React from "react";
 import { Corridor } from "@/types";
 import { ShieldCheck, Landmark, Wallet, DollarSign, Globe, Layers, Users } from "lucide-react";
+import channelDetailsData from "@/data/channel-details.json";
+
+// Icon mapping to resolve JSON icon names to React components
+const ICON_MAP: Record<string, React.ReactNode> = {
+  DollarSign: <DollarSign className="w-4 h-4" />,
+  Wallet: <Wallet className="w-4 h-4" />,
+  Landmark: <Landmark className="w-4 h-4" />,
+  Users: <Users className="w-4 h-4" />,
+  Globe: <Globe className="w-4 h-4" />,
+};
 
 interface AccessPointsProps {
   selectedCorridor: Corridor | null;
@@ -40,39 +50,13 @@ export default function AccessPoints({ selectedCorridor, allCorridors }: AccessP
 
   const providers = getProviderAccess();
 
-  // Access channels and characteristics
-  const channelDetails = [
-    {
-      name: "Cash Pickup",
-      icon: <DollarSign className="w-4 h-4 text-emerald-400" />,
-      desc: "Requires cash pickup location. High density via retail agents.",
-      score: 95,
-    },
-    {
-      name: "Mobile Wallet",
-      icon: <Wallet className="w-4 h-4 text-blue-400" />,
-      desc: "No bank account required, settles immediately via mobile rails.",
-      score: 85,
-    },
-    {
-      name: "Bank Deposit",
-      icon: <Landmark className="w-4 h-4 text-purple-400" />,
-      desc: "Requires formal bank account and routing. High KYC check compliance.",
-      score: 70,
-    },
-    {
-      name: "Agent Network",
-      icon: <Users className="w-4 h-4 text-amber-400" />,
-      desc: "Post-offices, grocery stores, gas stations. Critical in rural corridors.",
-      score: 88,
-    },
-    {
-      name: "Digital Account",
-      icon: <Globe className="w-4 h-4 text-pink-400" />,
-      desc: "Fintech accounts. High digital literacy requirement.",
-      score: 65,
-    },
-  ];
+  // Access channels loaded from JSON data file
+  const channelDetails = channelDetailsData.map((ch) => ({
+    name: ch.name,
+    icon: <span className={ch.iconColor}>{ICON_MAP[ch.iconName] || <Globe className="w-4 h-4" />}</span>,
+    desc: ch.description,
+    score: ch.score,
+  }));
 
   return (
     <div className="bg-slate-950/65 border border-slate-800/80 p-5 rounded-2xl flex flex-col h-full shadow-xl">

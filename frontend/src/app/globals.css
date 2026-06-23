@@ -1,8 +1,16 @@
 @import "tailwindcss";
 
+/* DNA Color Palette */
 :root {
-  --background: #020617;
+  --background: #030712;
+  --surface: #0B1117;
   --foreground: #f8fafc;
+}
+
+/* Tailwind v4 theme overrides to wire custom palette tokens */
+@theme {
+  --color-dna-bg: #030712;
+  --color-dna-surface: #0B1117;
 }
 
 body {
@@ -42,18 +50,17 @@ body {
 
 /* Leaflet dark theme compatibility */
 .leaflet-container {
-  background: #020617 !important;
+  background: #030712 !important;
   font-family: inherit;
 }
 
 .leaflet-popup-content-wrapper {
-  background-color: #0f172a !important;
+  background-color: var(--surface) !important;
   color: #f1f5f9 !important;
   border: 1px solid #334155 !important;
   border-radius: 8px !important;
 }
 
 .leaflet-popup-tip {
-  background-color: #0f172a !important;
+  background-color: var(--surface) !important;
 }
-

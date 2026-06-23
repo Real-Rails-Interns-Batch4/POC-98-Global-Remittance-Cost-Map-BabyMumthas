@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
@@ -15,9 +16,12 @@ app = FastAPI(
 )
 
 # Enable CORS for Next.js development server
+_cors_origins_raw = os.getenv("CORS_ORIGINS", "*")
+_cors_origins = [o.strip() for o in _cors_origins_raw.split(",")]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=_cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

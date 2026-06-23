@@ -1,0 +1,9 @@
+[
+  ["IN", "AE"], ["IN", "US"], ["US", "MX"], ["GB", "IN"], ["SA", "PK"],
+  ["DE", "TR"], ["AE", "BD"], ["CA", "PH"], ["AU", "IN"], ["FR", "MA"],
+  ["US", "IN"], ["AE", "IN"], ["GB", "NG"], ["US", "PH"], ["DE", "PL"],
+  ["ES", "CO"], ["GB", "PK"], ["SG", "MY"], ["US", "VN"], ["SA", "EG"],
+  ["AE", "PK"], ["ZA", "ZW"], ["IT", "RO"], ["US", "CN"], ["CA", "IN"],
+  ["MY", "ID"], ["AU", "VN"], ["SA", "IN"], ["FR", "SN"], ["AE", "EG"],
+  ["GB", "BD"], ["US", "SV"], ["DE", "UA"], ["US", "DO"], ["JP", "BR"]
+]

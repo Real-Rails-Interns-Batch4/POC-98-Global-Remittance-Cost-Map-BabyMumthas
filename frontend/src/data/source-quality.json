@@ -1,0 +1,23 @@
+{
+  "rows": [
+    {
+      "label": "Primary Reference Sources:",
+      "value": "World Bank RPW / ECB Data Portal"
+    },
+    {
+      "label": "Data Coverage:",
+      "value": "35 global corridors, 25 distinct countries"
+    },
+    {
+      "label": "Refresh Cycle & Date:",
+      "value": "2026-06-21 (Static Reference)",
+      "hasRefreshIcon": true
+    },
+    {
+      "label": "Dataset Status:",
+      "value": "Synthetic Label",
+      "isStatus": true
+    }
+  ],
+  "transparencyNotice": "All data displayed on this portal is high-fidelity synthetic reference data modeled on real average costs. Ingestion adapters for real-time World Bank API inputs are stubbed in `/backend/app/adapters`. Do not use this data for live remittance executions."
+}

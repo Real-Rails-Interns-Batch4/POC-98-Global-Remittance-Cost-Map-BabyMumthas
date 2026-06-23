@@ -166,7 +166,7 @@ export default function CorridorMap({
       >
         <MapController center={mapCenter} zoom={mapZoom} />
         {/* Dark Matter Premium Base Map Layer */}
-        <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
+        <TileLayer url={process.env.NEXT_PUBLIC_MAP_TILE_URL || "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"} />
 
         {/* Render routes */}
         {filteredCorridors.map((c) => {

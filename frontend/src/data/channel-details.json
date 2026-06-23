@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Cash Pickup",
+    "iconName": "DollarSign",
+    "iconColor": "text-emerald-400",
+    "description": "Requires cash pickup location. High density via retail agents.",
+    "score": 95
+  },
+  {
+    "name": "Mobile Wallet",
+    "iconName": "Wallet",
+    "iconColor": "text-blue-400",
+    "description": "No bank account required, settles immediately via mobile rails.",
+    "score": 85
+  },
+  {
+    "name": "Bank Deposit",
+    "iconName": "Landmark",
+    "iconColor": "text-purple-400",
+    "description": "Requires formal bank account and routing. High KYC check compliance.",
+    "score": 70
+  },
+  {
+    "name": "Agent Network",
+    "iconName": "Users",
+    "iconColor": "text-amber-400",
+    "description": "Post-offices, grocery stores, gas stations. Critical in rural corridors.",
+    "score": 88
+  },
+  {
+    "name": "Digital Account",
+    "iconName": "Globe",
+    "iconColor": "text-pink-400",
+    "description": "Fintech accounts. High digital literacy requirement.",
+    "score": 65
+  }
+]

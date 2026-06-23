@@ -1,0 +1,86 @@
+{
+  "formalChannels": {
+    "title": "Formal Channels (Regulated Rails)",
+    "iconName": "CheckCircle",
+    "description": "Licensed commercial banks, money transfer operators (Wise, Western Union, MoneyGram), and licensed fintechs. These routes operate under central bank supervision, AML/CFT compliance audits, and clear state jurisdictions.",
+    "stats": [
+      { "label": "Average Cost", "value": "3.5% - 7% (includes fixed fees and FX spreads)" },
+      { "label": "Settlement Speed", "value": "Instant (Fintechs) to 3-5 days (Banks / SWIFT)" },
+      { "label": "Regulatory Considerations", "value": "Strict KYC, compliance verification, and transaction tracking to prevent financial crimes.", "fullWidth": true }
+    ],
+    "footerNote": "Provides full legal protection, deposit insurance, and transaction receipts.",
+    "footerColor": "emerald"
+  },
+  "informalChannels": {
+    "title": "Informal Channels (Hawala / Unlicensed Networks)",
+    "iconName": "ShieldAlert",
+    "description": "Trust-based systems operating outside formal bank supervision. Money does not physically cross borders. Instead, Hawaladars net off balances locally through international trade invoices, gold trading, and familial ties.",
+    "stats": [
+      { "label": "Average Cost", "value": "1% - 2.5% (determined by cash pool availability)" },
+      { "label": "Settlement Speed", "value": "Near Instant (mediated by phone/message networks)" },
+      { "label": "Operational Risk", "value": "High counterparty risk (the agent may abscond). High risk of severe criminal penalties.", "fullWidth": true }
+    ],
+    "footerNote": "Purely trust-based. Operates in regions with blocked banking channels or high inflation.",
+    "footerColor": "amber"
+  },
+  "railControlCards": [
+    {
+      "title": "Central Banks",
+      "iconName": "Landmark",
+      "iconColor": "text-emerald-400",
+      "description": "Operate large-value national payment rails (e.g. Fedwire, TARGET2) and set exchange rate rules.",
+      "details": [
+        { "label": "Rules Set", "value": "Monetary policy, reserve rules" },
+        { "label": "Fee Share", "value": "Zero (operates infrastructure)" }
+      ]
+    },
+    {
+      "title": "Commercial Banks",
+      "iconName": "Key",
+      "iconColor": "text-blue-400",
+      "description": "Hold international liquidity in correspondent accounts and handle the legacy SWIFT messaging routing.",
+      "details": [
+        { "label": "Approvals", "value": "KYC/AML compliance reviews" },
+        { "label": "Fee Share", "value": "High fixed wire routing charges" }
+      ]
+    },
+    {
+      "title": "Payment Networks",
+      "iconName": "Globe",
+      "iconColor": "text-purple-400",
+      "description": "Card schemes (Visa, MasterCard) clearing payments on proprietary international rails.",
+      "details": [
+        { "label": "Rules Set", "value": "Interoperability specs" },
+        { "label": "Fee Share", "value": "Interchange and clearing fees" }
+      ]
+    },
+    {
+      "title": "Fintech & Stablecoins",
+      "iconName": "DollarSign",
+      "iconColor": "text-amber-500",
+      "description": "Provide aggregations or block public ledger protocols directly, bypassing legacy banking loops.",
+      "details": [
+        { "label": "Who moves", "value": "Smart contracts / peer-to-peer" },
+        { "label": "Fee Share", "value": "Network gas fee, low spread" }
+      ]
+    }
+  ],
+  "whyMattersCards": [
+    {
+      "title": "Financial Inclusion",
+      "titleColor": "text-emerald-400",
+      "content": "Remittances are often the first step into formal banking for rural families, enabling saving accounts and micro-insurance."
+    },
+    {
+      "title": "Macroeconomic Stability",
+      "titleColor": "text-blue-400",
+      "content": "In many developing nations, remittance flows exceed foreign direct investment (FDI) and official development aid combined, contributing up to 30% of national GDP."
+    },
+    {
+      "title": "Family Support",
+      "titleColor": "text-amber-500",
+      "content": "Direct cross-border support goes straight to households, financing daily necessities, education, healthcare, and micro-businesses."
+    }
+  ],
+  "sdgNote": "UN Sustainable Development Goal (SDG) 10.c: Aims to reduce the transaction costs of migrant remittances to less than 3% and eliminate corridor costs higher than 5% by 2030. High fee margins directly extract capital from vulnerable families."
+}

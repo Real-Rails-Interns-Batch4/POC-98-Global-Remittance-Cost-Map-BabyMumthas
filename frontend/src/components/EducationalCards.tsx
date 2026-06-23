@@ -2,9 +2,22 @@
 
 import React, { useState } from "react";
 import { Landmark, Shield, ShieldAlert, BookOpen, Key, DollarSign, Scale, Globe, CheckCircle } from "lucide-react";
+import educationalContent from "@/data/educational-content.json";
+
+// Icon mapping to resolve JSON icon names to React components
+const ICON_MAP: Record<string, React.ReactNode> = {
+  CheckCircle: <CheckCircle className="w-4 h-4 text-emerald-400" />,
+  ShieldAlert: <ShieldAlert className="w-4 h-4 text-amber-500" />,
+  Landmark: <Landmark className="w-4 h-4 text-emerald-400" />,
+  Key: <Key className="w-4 h-4 text-blue-400" />,
+  Globe: <Globe className="w-4 h-4 text-purple-400" />,
+  DollarSign: <DollarSign className="w-4 h-4 text-amber-500" />,
+};
 
 export default function EducationalCards() {
   const [activeTab, setActiveTab] = useState<"formal-informal" | "rail-control" | "why-matters">("formal-informal");
+
+  const { formalChannels, informalChannels, railControlCards, whyMattersCards, sdgNote } = educationalContent;
 
   return (
     <div className="bg-slate-950/65 border border-slate-800/80 rounded-2xl p-5 shadow-xl flex flex-col gap-4">
@@ -50,62 +63,50 @@ export default function EducationalCards() {
             {/* Formal channels */}
             <div className="bg-slate-900/40 p-4.5 rounded-xl border border-slate-800/60 space-y-3.5">
               <h4 className="text-xs font-bold text-slate-200 flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-emerald-400" />
-                Formal Channels (Regulated Rails)
+                {ICON_MAP[formalChannels.iconName]}
+                {formalChannels.title}
               </h4>
               <p className="text-[10px] text-slate-400 leading-relaxed">
-                Licensed commercial banks, money transfer operators (Wise, Western Union, MoneyGram), and licensed fintechs. These routes operate under central bank supervision, AML/CFT compliance audits, and clear state jurisdictions.
+                {formalChannels.description}
               </p>
               
               <div className="grid grid-cols-2 gap-3 pt-1 text-[10.5px]">
-                <div className="bg-slate-950/60 p-2.5 rounded-lg border border-slate-850">
-                  <span className="font-semibold text-slate-300 block mb-0.5">Average Cost</span>
-                  <span className="text-slate-400">3.5% - 7% (includes fixed fees and FX spreads)</span>
-                </div>
-                <div className="bg-slate-950/60 p-2.5 rounded-lg border border-slate-850">
-                  <span className="font-semibold text-slate-300 block mb-0.5">Settlement Speed</span>
-                  <span className="text-slate-400">Instant (Fintechs) to 3-5 days (Banks / SWIFT)</span>
-                </div>
-                <div className="bg-slate-950/60 p-2.5 rounded-lg border border-slate-850 col-span-2">
-                  <span className="font-semibold text-slate-300 block mb-0.5">Regulatory Considerations</span>
-                  <span className="text-slate-400">Strict KYC, compliance verification, and transaction tracking to prevent financial crimes.</span>
-                </div>
+                {formalChannels.stats.map((stat, idx) => (
+                  <div key={idx} className={`bg-slate-950/60 p-2.5 rounded-lg border border-slate-850 ${stat.fullWidth ? "col-span-2" : ""}`}>
+                    <span className="font-semibold text-slate-300 block mb-0.5">{stat.label}</span>
+                    <span className="text-slate-400">{stat.value}</span>
+                  </div>
+                ))}
               </div>
 
               <div className="text-[10px] text-emerald-500/90 font-medium flex items-center gap-1.5 bg-emerald-500/5 p-2 rounded-lg border border-emerald-500/10">
                 <Shield className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                <span>Provides full legal protection, deposit insurance, and transaction receipts.</span>
+                <span>{formalChannels.footerNote}</span>
               </div>
             </div>
 
             {/* Informal channels */}
             <div className="bg-slate-900/40 p-4.5 rounded-xl border border-slate-800/60 space-y-3.5">
               <h4 className="text-xs font-bold text-slate-200 flex items-center gap-2">
-                <ShieldAlert className="w-4 h-4 text-amber-500" />
-                Informal Channels (Hawala / Unlicensed Networks)
+                {ICON_MAP[informalChannels.iconName]}
+                {informalChannels.title}
               </h4>
               <p className="text-[10px] text-slate-400 leading-relaxed">
-                Trust-based systems operating outside formal bank supervision. Money does not physically cross borders. Instead, Hawaladars net off balances locally through international trade invoices, gold trading, and familial ties.
+                {informalChannels.description}
               </p>
 
               <div className="grid grid-cols-2 gap-3 pt-1 text-[10.5px]">
-                <div className="bg-slate-950/60 p-2.5 rounded-lg border border-slate-850">
-                  <span className="font-semibold text-slate-300 block mb-0.5">Average Cost</span>
-                  <span className="text-slate-400">1% - 2.5% (determined by cash pool availability)</span>
-                </div>
-                <div className="bg-slate-950/60 p-2.5 rounded-lg border border-slate-850">
-                  <span className="font-semibold text-slate-300 block mb-0.5">Settlement Speed</span>
-                  <span className="text-slate-400">Near Instant (mediated by phone/message networks)</span>
-                </div>
-                <div className="bg-slate-950/60 p-2.5 rounded-lg border border-slate-850 col-span-2">
-                  <span className="font-semibold text-slate-300 block mb-0.5">Operational Risk</span>
-                  <span className="text-slate-400">High counterparty risk (the agent may abscond). High risk of severe criminal penalties.</span>
-                </div>
+                {informalChannels.stats.map((stat, idx) => (
+                  <div key={idx} className={`bg-slate-950/60 p-2.5 rounded-lg border border-slate-850 ${stat.fullWidth ? "col-span-2" : ""}`}>
+                    <span className="font-semibold text-slate-300 block mb-0.5">{stat.label}</span>
+                    <span className="text-slate-400">{stat.value}</span>
+                  </div>
+                ))}
               </div>
 
               <div className="text-[10px] text-amber-500/90 font-medium flex items-center gap-1.5 bg-amber-500/5 p-2 rounded-lg border border-amber-500/10">
                 <Scale className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                <span>Purely trust-based. Operates in regions with blocked banking channels or high inflation.</span>
+                <span>{informalChannels.footerNote}</span>
               </div>
             </div>
           </div>
@@ -114,73 +115,24 @@ export default function EducationalCards() {
         {/* Tab 2: Who Controls the Rail */}
         {activeTab === "rail-control" && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 animate-fade-in text-[10.5px]">
-            {/* Card 1: Central Banks */}
-            <div className="bg-slate-900/40 p-4 rounded-xl border border-slate-800/60 flex flex-col justify-between">
-              <div>
-                <h4 className="text-xs font-bold text-slate-200 flex items-center gap-1.5 mb-2">
-                  <Landmark className="w-4 h-4 text-emerald-400" />
-                  Central Banks
-                </h4>
-                <p className="text-[10px] text-slate-400 leading-relaxed">
-                  Operate large-value national payment rails (e.g. Fedwire, TARGET2) and set exchange rate rules.
-                </p>
+            {railControlCards.map((card, idx) => (
+              <div key={idx} className="bg-slate-900/40 p-4 rounded-xl border border-slate-800/60 flex flex-col justify-between">
+                <div>
+                  <h4 className="text-xs font-bold text-slate-200 flex items-center gap-1.5 mb-2">
+                    <span className={card.iconColor}>{ICON_MAP[card.iconName]}</span>
+                    {card.title}
+                  </h4>
+                  <p className="text-[10px] text-slate-400 leading-relaxed">
+                    {card.description}
+                  </p>
+                </div>
+                <div className="mt-3 pt-2.5 border-t border-slate-850/80 space-y-1">
+                  {card.details.map((detail, dIdx) => (
+                    <div key={dIdx}><span className="font-semibold text-slate-300">{detail.label}:</span> {detail.value}</div>
+                  ))}
+                </div>
               </div>
-              <div className="mt-3 pt-2.5 border-t border-slate-850/80 space-y-1">
-                <div><span className="font-semibold text-slate-300">Rules Set:</span> Monetary policy, reserve rules</div>
-                <div><span className="font-semibold text-slate-300">Fee Share:</span> Zero (operates infrastructure)</div>
-              </div>
-            </div>
-
-            {/* Card 2: Commercial Banks */}
-            <div className="bg-slate-900/40 p-4 rounded-xl border border-slate-800/60 flex flex-col justify-between">
-              <div>
-                <h4 className="text-xs font-bold text-slate-200 flex items-center gap-1.5 mb-2">
-                  <Key className="w-4 h-4 text-blue-400" />
-                  Commercial Banks
-                </h4>
-                <p className="text-[10px] text-slate-400 leading-relaxed">
-                  Hold international liquidity in correspondent accounts and handle the legacy SWIFT messaging routing.
-                </p>
-              </div>
-              <div className="mt-3 pt-2.5 border-t border-slate-850/80 space-y-1">
-                <div><span className="font-semibold text-slate-300">Approvals:</span> KYC/AML compliance reviews</div>
-                <div><span className="font-semibold text-slate-300">Fee Share:</span> High fixed wire routing charges</div>
-              </div>
-            </div>
-
-            {/* Card 3: Payment Networks */}
-            <div className="bg-slate-900/40 p-4 rounded-xl border border-slate-800/60 flex flex-col justify-between">
-              <div>
-                <h4 className="text-xs font-bold text-slate-200 flex items-center gap-1.5 mb-2">
-                  <Globe className="w-4 h-4 text-purple-400" />
-                  Payment Networks
-                </h4>
-                <p className="text-[10px] text-slate-400 leading-relaxed">
-                  Card schemes (Visa, MasterCard) clearing payments on proprietary international rails.
-                </p>
-              </div>
-              <div className="mt-3 pt-2.5 border-t border-slate-850/80 space-y-1">
-                <div><span className="font-semibold text-slate-300">Rules Set:</span> Interoperability specs</div>
-                <div><span className="font-semibold text-slate-300">Fee Share:</span> Interchange and clearing fees</div>
-              </div>
-            </div>
-
-            {/* Card 4: Fintechs & Crypto */}
-            <div className="bg-slate-900/40 p-4 rounded-xl border border-slate-800/60 flex flex-col justify-between">
-              <div>
-                <h4 className="text-xs font-bold text-slate-200 flex items-center gap-1.5 mb-2">
-                  <DollarSign className="w-4 h-4 text-amber-500" />
-                  Fintech & Stablecoins
-                </h4>
-                <p className="text-[10px] text-slate-400 leading-relaxed">
-                  Provide aggregations or block public ledger protocols directly, bypassing legacy banking loops.
-                </p>
-              </div>
-              <div className="mt-3 pt-2.5 border-t border-slate-850/80 space-y-1">
-                <div><span className="font-semibold text-slate-300">Who moves:</span> Smart contracts / peer-to-peer</div>
-                <div><span className="font-semibold text-slate-300">Fee Share:</span> Network gas fee, low spread</div>
-              </div>
-            </div>
+            ))}
           </div>
         )}
 
@@ -192,28 +144,18 @@ export default function EducationalCards() {
               The Economic Impact of Remittances
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-[10.5px]">
-              <div className="bg-slate-950/40 p-3.5 rounded-lg border border-slate-850 space-y-1">
-                <span className="font-bold text-emerald-400 text-xs block mb-1">Financial Inclusion</span>
-                <p className="text-[10px] text-slate-400 leading-relaxed">
-                  Remittances are often the first step into formal banking for rural families, enabling saving accounts and micro-insurance.
-                </p>
-              </div>
-              <div className="bg-slate-950/40 p-3.5 rounded-lg border border-slate-850 space-y-1">
-                <span className="font-bold text-blue-400 text-xs block mb-1">Macroeconomic Stability</span>
-                <p className="text-[10px] text-slate-400 leading-relaxed">
-                  In many developing nations, remittance flows exceed foreign direct investment (FDI) and official development aid combined, contributing up to 30% of national GDP.
-                </p>
-              </div>
-              <div className="bg-slate-950/40 p-3.5 rounded-lg border border-slate-850 space-y-1">
-                <span className="font-bold text-amber-500 text-xs block mb-1">Family Support</span>
-                <p className="text-[10px] text-slate-400 leading-relaxed">
-                  Direct cross-border support goes straight to households, financing daily necessities, education, healthcare, and micro-businesses.
-                </p>
-              </div>
+              {whyMattersCards.map((card, idx) => (
+                <div key={idx} className="bg-slate-950/40 p-3.5 rounded-lg border border-slate-850 space-y-1">
+                  <span className={`font-bold ${card.titleColor} text-xs block mb-1`}>{card.title}</span>
+                  <p className="text-[10px] text-slate-400 leading-relaxed">
+                    {card.content}
+                  </p>
+                </div>
+              ))}
             </div>
             
             <div className="text-[10px] text-slate-400 border-t border-slate-850 pt-3 leading-relaxed">
-              <strong>UN Sustainable Development Goal (SDG) 10.c:</strong> Aims to reduce the transaction costs of migrant remittances to less than 3% and eliminate corridor costs higher than 5% by 2030. High fee margins directly extract capital from vulnerable families.
+              <strong>{sdgNote}</strong>
             </div>
           </div>
         )}
