@@ -150,15 +150,15 @@ export default function Home() {
         {summary && <DashboardHero summary={summary} />}
 
         {/* Section 2: Map & Active Corridor comparison side by side */}
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-          <div className="xl:col-span-2">
+        <div className="grid grid-cols-1 xl:grid-cols-10 gap-6">
+          <div className="xl:col-span-7">
             <MapWrapper
               corridors={corridors}
               selectedCorridor={selectedCorridor}
               onSelectCorridor={setSelectedCorridor}
             />
           </div>
-          <div>
+          <div className="xl:col-span-3">
             <FeeCompare selectedCorridor={selectedCorridor} allCorridors={corridors} />
           </div>
         </div>
